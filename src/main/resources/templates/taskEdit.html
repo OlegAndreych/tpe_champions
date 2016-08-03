@@ -1,0 +1,14 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Champions estimations list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<form th:action="@{/task/{taskId}/submit(taskId=${taskId}?:'none')}" method="post">
+    Name:<br/>
+    <input type="text" name="name" th:value="${name}"/><br/>
+    <button type="submit" name="submit">Submit</button>
+</form>
+</body>
+</html>

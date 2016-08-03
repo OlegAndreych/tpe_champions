@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Champions estimations list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<a th:href="@{/}">To list</a>
+<br/>
+<a th:href="@{/task/{taskId}/edit(taskId=${task.id})}">Edit</a>
+<table th:object="${task}">
+    <tr>
+        <th>Name:</th>
+        <td th:text="*{name}"></td>
+    </tr>
+    <tr>
+        <th>Estimation:</th>
+        <td th:text="*{estimation}"></td>
+    </tr>
+    <tr>
+        <th>Date:</th>
+        <td th:text="*{date}"></td>
+    </tr>
+    <tr>
+        <td>
+            <a th:href="@{/task/{taskId}/performer/none/edit(taskId=${task.id})}">Add</a>
+        </td>
+    </tr>
+    <tr>
+        <th></th>
+        <th>Name</th>
+        <th>Estimation</th>
+    </tr>
+    <tr>
+        <th th:rowspan="*{team.size()+1}">Team:</th>
+    </tr>
+    <tr th:each="perf : *{team}">
+        <td>
+            <a th:href="@{/task/{taskId}/performer/{performerId}(taskId=${task.id}, performerId=${perf.value.id})}"
+               th:text="${perf.value.name}"></a>
+        </td>
+        <td th:text="${perf.value.estimation}"></td>
+        <td>
+            <a th:href="@{/task/{taskId}/performer/{performerId}/edit(taskId=${task.id}, performerId=${perf.value.id})}">Edit</a>
+        </td>
+        <td>
+            <a th:href="@{/task/{taskId}/performer/{performerId}/remove(taskId=${task.id}, performerId=${perf.value.id})}">Remove</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

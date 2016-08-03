@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Champions estimations list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<form th:action="@{/task/{taskId}/performer/{performerId}/estimation/{estimationId}/submit(taskId=${taskId}, performerId=${performerId}, estimationId=${estimationId}?:'none')}"
+      method="post">
+    Name:<br/>
+    <input type="text" name="partName" th:value="${partName}"/><br/>
+    Best:<br/>
+    <input type="text" name="best" th:value="${best}"/><br/>
+    Worst:<br/>
+    <input type="text" name="worst" th:value="${worst}"/><br/>
+    Most likely:<br/>
+    <input type="text" name="most" th:value="${most}"/><br/>
+    Is Champion:<br/>
+    <input type="checkbox" name="champion" th:checked="${champion}?:false"/><br/>
+    <button type="submit" name="submit">Submit</button>
+</form>
+</body>
+</html>

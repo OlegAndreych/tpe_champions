@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Champions estimations list</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<a href="/task/none/edit">Add task</a>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Estimation</th>
+    </tr>
+    <tr th:each="task, rowStat : ${tasks}" th:object="${task}">
+        <td>
+            <a th:href="@{/task/{taskId}(taskId=*{id})}" th:text="*{name}"></a>
+        </td>
+        <td th:text="*{estimation}"></td>
+        <td>
+            <a th:href="@{/task/{taskId}/edit(taskId=*{id})}">Edit</a>
+        </td>
+        <td>
+            <a th:href="@{/task/{id}/remove(id=*{id})}">Remove</a>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
