@@ -1,50 +1,74 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
+    <link th:replace="fragments :: materialize-css"/>
     <title>Champions estimations list</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<a th:href="@{/}">To list</a>
-<a th:href="@{/task/{taskId}(taskId=${task.id})}">To task</a>
-<br/>
-<a th:href="@{/task/{taskId}/performer/{performerId}/edit(taskId=${task.id}, performerId=${performer.id})}">Edit</a>
-<table th:object="${performer}">
-    <tr>
-        <th>Name:</th>
-        <td th:text="*{name}"></td>
-    </tr>
-    <tr>
-        <th>Estimation:</th>
-        <td th:text="*{estimation}"></td>
-    </tr>
-    <td>
-        <a th:href="@{/task/{taskId}/performer/{performerId}/estimation/none/edit(taskId=${taskId}, performerId=*{id})}">Add</a>
-    </td>
-    <tr>
-        <th></th>
-        <th>Part Name</th>
-        <th>Best</th>
-        <th>Worst</th>
-        <th>Most Likely</th>
-        <th>Is Champion</th>
-    </tr>
-    <tr>
-        <th th:rowspan="*{estimations.size()+1}">Estimations:</th>
-    </tr>
-    <tr th:each="est : *{estimations}">
-        <td th:text="${est.value.partName}"></td>
-        <td th:text="${est.value.best}"></td>
-        <td th:text="${est.value.worst}"></td>
-        <td th:text="${est.value.mostLikely}"></td>
-        <td th:text="${est.value.champion}"></td>
-        <td>
-            <a th:href="@{/task/{taskId}/performer/{performerId}/estimation/{estimationId}/edit(taskId=${taskId}, performerId=*{id}, estimationId=${est.value.id})}">Edit</a>
-        </td>
-        <td>
-            <a th:href="@{/task/{taskId}/performer/{performerId}/estimation/{estimationId}/remove(taskId=${taskId}, performerId=*{id}, estimationId=${est.value.id})}">Remove</a>
-        </td>
-    </tr>
-</table>
+<header>
+    <nav class="nav-extended">
+        <div class="nav-wrapper container">
+            <div class="nav-content">
+                <span class="nav-title">Performer Info</span>
+                <a class="btn-floating btn-large halfway-fab waves-effect waves-light red"
+                   th:href="@{/task/{taskId}/performer/{performerId}/edit(taskId=${task.id}, performerId=${performer.id})}">
+                    <i class="material-icons">edit</i>
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="container section">
+        <table class="striped z-depth-1" th:object="${performer}">
+            <tr>
+                <th>Name:</th>
+                <td th:text="*{name}"></td>
+            </tr>
+            <tr>
+                <th>Estimation:</th>
+                <td th:text="*{estimation}"></td>
+            </tr>
+        </table>
+
+        <div class="section">
+            <h4 class="header red-text text-accent-1">Estimations</h4>
+        </div>
+
+        <table class="striped z-depth-1" th:object="${performer}">
+            <tr>
+                <th>Part Name</th>
+                <th>Best</th>
+                <th>Worst</th>
+                <th>Most Likely</th>
+                <th colspan="2">Is Champion</th>
+            </tr>
+            <tr th:each="est : *{estimations}">
+                <td th:text="${est.value.partName}"></td>
+                <td th:text="${est.value.best}"></td>
+                <td th:text="${est.value.worst}"></td>
+                <td th:text="${est.value.mostLikely}"></td>
+                <td th:text="${est.value.champion}"></td>
+                <td class="right-align">
+                    <a th:href="@{/task/{taskId}/performer/{performerId}/estimation/{estimationId}/edit(taskId=${taskId}, performerId=*{id}, estimationId=${est.value.id})}">
+                        <i class="material-icons">mode_edit</i>
+                    </a>
+                    <a th:href="@{/task/{taskId}/performer/{performerId}/estimation/{estimationId}/remove(taskId=${taskId}, performerId=*{id}, estimationId=${est.value.id})}">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div th:object="${performer}" class="fixed-action-btn">
+        <a class="btn-floating btn-large red"
+           th:href="@{/task/{taskId}/performer/{performerId}/estimation/none/edit(taskId=${taskId}, performerId=*{id})}">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
+</main>
+<div th:replace="fragments :: materialize-scripts"></div>
 </body>
 </html>

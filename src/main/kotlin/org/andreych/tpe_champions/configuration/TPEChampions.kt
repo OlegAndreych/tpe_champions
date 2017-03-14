@@ -28,7 +28,6 @@ open class TPEChampions
         val id2 = UUID.randomUUID().toString()
         val id3 = UUID.randomUUID().toString()
         val tasks = listOf(
-
                 Task(id = UUID.randomUUID().toString(),
                         name = "Task",
                         date = date2,

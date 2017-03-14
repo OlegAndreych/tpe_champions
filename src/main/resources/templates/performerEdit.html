@@ -1,15 +1,33 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link th:replace="fragments :: materialize-css"/>
     <title>Champions estimations list</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<form th:action="@{/task/{taskId}/performer/{performerId}/submit(taskId=${taskId}, performerId=${performerId}?:'none')}"
-      method="post">
-    Name:<br/>
-    <input type="text" name="name" th:value="${name}"/><br/>
-    <button type="submit" name="submit">Submit</button>
-</form>
+<header>
+    <nav class="nav-extended">
+        <div class="container">
+            <div class="nav-wrapper"><a class="brand-logo">Performer Edit</a></div>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="container section">
+        <form th:action="@{/task/{taskId}/performer/{performerId}/submit(taskId=${taskId}, performerId=${performerId}?:'none')}"
+              method="post">
+            <div class="input-field">
+                <input id="name" type="text" name="name" th:value="${name}"/><br/>
+                <label for="name">Performer Name</label>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit" name="submit">Submit
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+    </div>
+</main>
+<!--Import jQuery before materialize.js-->
+<div th:replace="fragments :: materialize-scripts"></div>
 </body>
 </html>
