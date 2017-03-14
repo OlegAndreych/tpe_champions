@@ -52,7 +52,7 @@ class Controller
         val task = when (taskId)
         {
             "none" -> Task(name = name).apply { taskStorage.addTask(id, this) }
-            else   -> taskStorage.modifyTask(taskId) { id, storedTask ->
+            else   -> taskStorage.modifyTask(taskId) { _, storedTask ->
                 storedTask.copy(name = name)
             }
         }
@@ -139,10 +139,9 @@ class Controller
                          @RequestParam most: Double,
                          @RequestParam(required = false) champion: Boolean): String
     {
-        val trueChamp = true.equals(champion)
         when (estimationId)
         {
-            "none" -> taskStorage.addEstimation(taskId, performerId, partName, best, worst, most, trueChamp)
+            "none" -> taskStorage.addEstimation(taskId, performerId, partName, best, worst, most, champion)
             else   -> taskStorage.modifyEstimation(taskId,
                     performerId,
                     estimationId,
@@ -150,7 +149,7 @@ class Controller
                     best,
                     worst,
                     most,
-                    trueChamp)
+                    champion)
         }
         return "redirect:/task/$taskId/performer/$performerId"
     }

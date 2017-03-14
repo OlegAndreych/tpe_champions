@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link th:replace="fragments :: materialize-css"/>
     <title>Champions estimations list</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
@@ -11,5 +12,7 @@
     <input type="text" name="name" th:value="${name}"/><br/>
     <button type="submit" name="submit">Submit</button>
 </form>
+<!--Import jQuery before materialize.js-->
+<div th:replace="fragments :: materialize-scripts"></div>
 </body>
 </html>

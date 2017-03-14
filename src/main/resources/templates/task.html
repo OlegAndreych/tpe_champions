@@ -1,52 +1,74 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link th:replace="fragments :: materialize-css"/>
     <title>Champions estimations list</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<a th:href="@{/}">To list</a>
-<br/>
-<a th:href="@{/task/{taskId}/edit(taskId=${task.id})}">Edit</a>
-<table th:object="${task}">
-    <tr>
-        <th>Name:</th>
-        <td th:text="*{name}"></td>
-    </tr>
-    <tr>
-        <th>Estimation:</th>
-        <td th:text="*{estimation}"></td>
-    </tr>
-    <tr>
-        <th>Date:</th>
-        <td th:text="*{date}"></td>
-    </tr>
-    <tr>
-        <td>
-            <a th:href="@{/task/{taskId}/performer/none/edit(taskId=${task.id})}">Add</a>
-        </td>
-    </tr>
-    <tr>
-        <th></th>
-        <th>Name</th>
-        <th>Estimation</th>
-    </tr>
-    <tr>
-        <th th:rowspan="*{team.size()+1}">Team:</th>
-    </tr>
-    <tr th:each="perf : *{team}">
-        <td>
-            <a th:href="@{/task/{taskId}/performer/{performerId}(taskId=${task.id}, performerId=${perf.value.id})}"
-               th:text="${perf.value.name}"></a>
-        </td>
-        <td th:text="${perf.value.estimation}"></td>
-        <td>
-            <a th:href="@{/task/{taskId}/performer/{performerId}/edit(taskId=${task.id}, performerId=${perf.value.id})}">Edit</a>
-        </td>
-        <td>
-            <a th:href="@{/task/{taskId}/performer/{performerId}/remove(taskId=${task.id}, performerId=${perf.value.id})}">Remove</a>
-        </td>
-    </tr>
-</table>
+<header>
+    <nav class="nav-extended">
+        <div class="nav-wrapper container">
+            <div class="nav-content">
+                <span class="nav-title">Task Info</span>
+                <a class="btn-floating btn-large halfway-fab waves-effect waves-light red"
+                   th:href="@{/task/{taskId}/edit(taskId=${task.id})}">
+                    <i class="material-icons">edit</i>
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="container section">
+        <table class="striped z-depth-1" th:object="${task}">
+            <tr>
+                <th>Name:</th>
+                <td th:text="*{name}"></td>
+            </tr>
+            <tr>
+                <th>Estimation:</th>
+                <td th:text="*{estimation}"></td>
+            </tr>
+            <tr>
+                <th>Date:</th>
+                <td th:text="*{date}"></td>
+            </tr>
+        </table>
+
+        <div class="section">
+            <h4 class="header red-text text-accent-1">Team</h4>
+        </div>
+
+        <table class="striped z-depth-1" th:object="${task}">
+            <tr>
+                <th>Name</th>
+                <th>Estimation</th>
+                <th colspan="2"></th>
+            </tr>
+            <tr th:each="perf : *{team}">
+                <td>
+                    <a th:href="@{/task/{taskId}/performer/{performerId}(taskId=${task.id}, performerId=${perf.value.id})}"
+                       th:text="${perf.value.name}"></a>
+                </td>
+                <td th:text="${perf.value.estimation}"></td>
+                <td class="right-align">
+                    <a th:href="@{/task/{taskId}/performer/{performerId}/edit(taskId=${task.id}, performerId=${perf.value.id})}">
+                        <i class="material-icons">mode_edit</i>
+                    </a>
+                    <a th:href="@{/task/{taskId}/performer/{performerId}/remove(taskId=${task.id}, performerId=${perf.value.id})}">
+                        <i class="material-icons">delete</i>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red" th:href="@{/task/{taskId}/performer/none/edit(taskId=${task.id})}">
+            <i class="large material-icons">add</i>
+        </a>
+    </div>
+</main>
+<div th:replace="fragments :: materialize-scripts"></div>
 </body>
 </html>
