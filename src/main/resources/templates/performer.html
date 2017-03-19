@@ -62,7 +62,7 @@
         </table>
     </div>
 
-    <div class="fixed-action-btn">
+    <div th:object="${performer}" class="fixed-action-btn">
         <a class="btn-floating btn-large red"
            th:href="@{/task/{taskId}/performer/{performerId}/estimation/none/edit(taskId=${taskId}, performerId=*{id})}">
             <i class="large material-icons">add</i>

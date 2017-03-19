@@ -6,22 +6,48 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 </head>
 <body>
-<div class="container">
-    <form th:action="@{/task/{taskId}/performer/{performerId}/estimation/{estimationId}/submit(taskId=${taskId}, performerId=${performerId}, estimationId=${estimationId}?:'none')}"
-          method="post">
-        Name:<br/>
-        <input type="text" name="partName" th:value="${partName}"/><br/>
-        Best:<br/>
-        <input type="text" name="best" th:value="${best}"/><br/>
-        Worst:<br/>
-        <input type="text" name="worst" th:value="${worst}"/><br/>
-        Most likely:<br/>
-        <input type="text" name="most" th:value="${most}"/><br/>
-        Is Champion:<br/>
-        <input type="checkbox" name="champion" th:checked="${champion}?:false"/><br/>
-        <button type="submit" name="submit">Submit</button>
-    </form>
-</div>
+<header>
+    <nav class="nav-extended">
+        <div class="container">
+            <div class="nav-wrapper"><a class="brand-logo">Estimation Part Edit</a></div>
+        </div>
+    </nav>
+</header>
+<main>
+    <div class="container">
+        <form th:action="@{/task/{taskId}/performer/{performerId}/estimation/{estimationId}/submit(taskId=${taskId}, performerId=${performerId}, estimationId=${estimationId}?:'none')}"
+              method="post">
+            <div class="section">
+                <div class="input-field">
+                    <input id="name" type="text" name="partName" th:value="${partName}"/><br/>
+                    <label for="name">Part Name</label>
+                </div>
+                <div class="input-field">
+                    <input id="best" type="text" name="best" th:value="${best}"/><br/>
+                    <label for="best">Best</label>
+                </div>
+                <div class="input-field">
+                    <input id="worst" type="text" name="worst" th:value="${worst}"/><br/>
+                    <label for="worst">Worst</label>
+                </div>
+                <div class="input-field">
+                    <input id="most" type="text" name="most" th:value="${most}"/><br/>
+                    <label for="most">Most Likely</label>
+                </div>
+                <div>
+                    <input id="champion" type="checkbox" name="champion" th:checked="${champion}?:false"/>
+                    <label for="champion">Is Champion</label>
+                </div>
+            </div>
+
+            <div class="section">
+                <button class="btn waves-effect waves-light" type="submit" name="submit">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </div>
+        </form>
+    </div>
+</main>
 <div th:replace="fragments :: materialize-scripts"></div>
 </body>
 </html>
