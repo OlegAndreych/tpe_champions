@@ -114,7 +114,6 @@ class Controller
                        @PathVariable performerId: String,
                        @PathVariable estimationId: String): String
     {
-        String(StringBuilder("a"))
         if (estimationId != "none")
         {
             with(taskStorage.getTask(taskId).getPerformer(performerId).getEstimation(estimationId))
