@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  * Created by oleg on 30.05.17.
  */
 @Configuration
-open class WebMvcConfigurer @Autowired constructor(val noCacheInterceptor: NoCacheInterceptor) : WebMvcConfigurerAdapter()
+open class WebMvcConfigurer @Autowired constructor(private val noCacheInterceptor: NoCacheInterceptor) : WebMvcConfigurerAdapter()
 {
     override fun addInterceptors(registry: InterceptorRegistry?)
     {
