@@ -3,7 +3,7 @@
 <head>
     <link th:replace="fragments :: materialize-css"/>
     <title>Champions estimations list</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type"/>
 </head>
 <body>
 <header>
@@ -15,33 +15,35 @@
 </header>
 <main>
     <div class="container">
-        <form th:action="@{/task/{taskId}/performer/{performerId}/estimation/{estimationId}/submit(taskId=${taskId}, performerId=${performerId}, estimationId=${estimationId}?:'none')}"
-              method="post">
+        <form method="post"
+              th:action="@{/task/{taskId}/performer/{performerId}/estimation/{estimationId}/submit(taskId=${taskId}, performerId=${performerId}, estimationId=${estimationId}?:'none')}">
             <div class="section">
                 <div class="input-field">
-                    <input id="name" type="text" name="partName" th:value="${partName}"/><br/>
+                    <input id="name" name="partName" th:value="${partName}" type="text"/><br/>
                     <label for="name">Part Name</label>
                 </div>
                 <div class="input-field">
-                    <input id="best" type="text" name="best" th:value="${best}"/><br/>
+                    <input id="best" name="best" th:value="${best}" type="text"/><br/>
                     <label for="best">Best</label>
                 </div>
                 <div class="input-field">
-                    <input id="worst" type="text" name="worst" th:value="${worst}"/><br/>
+                    <input id="worst" name="worst" th:value="${worst}" type="text"/><br/>
                     <label for="worst">Worst</label>
                 </div>
                 <div class="input-field">
-                    <input id="most" type="text" name="most" th:value="${most}"/><br/>
+                    <input id="most" name="most" th:value="${most}" type="text"/><br/>
                     <label for="most">Most Likely</label>
                 </div>
                 <div>
-                    <input id="champion" type="checkbox" name="champion" th:checked="${champion}?:false"/>
-                    <label for="champion">Is Champion</label>
+                    <label>
+                        <input id="champion" name="champion" th:checked="${champion}?:false" type="checkbox"/>
+                        <span>Is Champion</span>
+                    </label>
                 </div>
             </div>
 
             <div class="section">
-                <button class="btn waves-effect waves-light" type="submit" name="submit">Submit
+                <button class="btn waves-effect waves-light" name="submit" type="submit">Submit
                     <i class="material-icons right">send</i>
                 </button>
             </div>
