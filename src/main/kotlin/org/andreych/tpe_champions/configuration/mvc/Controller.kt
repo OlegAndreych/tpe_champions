@@ -9,34 +9,28 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 
 @Controller
-class Controller
-{
-    val taskStorage = TaskStorageImpl
+class Controller {
+    private val taskStorage = TaskStorageImpl
 
     @RequestMapping("/")
-    fun showTaskList(model: Model): String
-    {
+    fun showTaskList(model: Model): String {
         fillTaskRows(model)
         return "taskList"
     }
 
-    private fun fillTaskRows(model: Model)
-    {
+    private fun fillTaskRows(model: Model) {
         model.addAttribute("tasks", taskStorage.getAllTasks().sortedByDescending { it.date })
     }
 
     @RequestMapping("/task/{id}/remove")
-    fun removeTask(@PathVariable id: String): String
-    {
+    fun removeTask(@PathVariable id: String): String {
         taskStorage.removeTask(id)
         return "redirect:/"
     }
 
     @RequestMapping("/task/{id}/edit")
-    fun editTask(model: Model, @PathVariable id: String): String
-    {
-        if (id != "none")
-        {
+    fun editTask(model: Model, @PathVariable id: String): String {
+        if (id != "none") {
             with(taskStorage.getTask(id))
             {
                 model.addAttribute("name", name)
@@ -47,12 +41,10 @@ class Controller
     }
 
     @RequestMapping("/task/{taskId}/submit")
-    fun submitTask(@RequestParam name: String, @PathVariable taskId: String): String
-    {
-        val task = when (taskId)
-        {
+    fun submitTask(@RequestParam name: String, @PathVariable taskId: String): String {
+        val task = when (taskId) {
             "none" -> Task(name = name).apply { taskStorage.addTask(id, this) }
-            else   -> taskStorage.modifyTask(taskId) { _, storedTask ->
+            else -> taskStorage.modifyTask(taskId) { _, storedTask ->
                 storedTask.copy(name = name)
             }
         }
@@ -60,17 +52,14 @@ class Controller
     }
 
     @RequestMapping("/task/{taskId}")
-    fun showTask(model: Model, @PathVariable taskId: String): String
-    {
+    fun showTask(model: Model, @PathVariable taskId: String): String {
         model.addAttribute("task", taskStorage.getTask(taskId))
         return "task"
     }
 
     @RequestMapping("/task/{taskId}/performer/{performerId}/edit")
-    fun editPerformer(model: Model, @PathVariable taskId: String, @PathVariable performerId: String): String
-    {
-        if (performerId != "none")
-        {
+    fun editPerformer(model: Model, @PathVariable taskId: String, @PathVariable performerId: String): String {
+        if (performerId != "none") {
             taskStorage.getTask(taskId).getPerformer(performerId).apply {
                 model.addAttribute("name", name)
                 model.addAttribute("performerId", id)
@@ -83,27 +72,23 @@ class Controller
     @RequestMapping("/task/{taskId}/performer/{performerId}/submit")
     fun submitPerformer(@RequestParam name: String,
                         @PathVariable performerId: String,
-                        @PathVariable taskId: String): String
-    {
-        val performer = when (performerId)
-        {
+                        @PathVariable taskId: String): String {
+        val performer = when (performerId) {
             "none" -> taskStorage.addPerformer(name, taskId)
-            else   -> taskStorage.modifyPerformer(name, taskId, performerId)
+            else -> taskStorage.modifyPerformer(name, taskId, performerId)
         }
         return "redirect:/task/$taskId/performer/${performer.id}"
     }
 
     @RequestMapping("/task/{taskId}/performer/{performerId}")
-    fun showPerformer(model: Model, @PathVariable taskId: String, @PathVariable performerId: String): String
-    {
+    fun showPerformer(model: Model, @PathVariable taskId: String, @PathVariable performerId: String): String {
         model.addAttribute("performer", taskStorage.getTask(taskId).getPerformer(performerId))
         model.addAttribute("task", taskStorage.getTask(taskId))
         return "performer"
     }
 
     @RequestMapping("/task/{taskId}/performer/{performerId}/remove")
-    fun removePerformer(@PathVariable taskId: String, @PathVariable performerId: String): String
-    {
+    fun removePerformer(@PathVariable taskId: String, @PathVariable performerId: String): String {
         taskStorage.removePerformer(taskId, performerId)
         return "redirect:/task/$taskId"
     }
@@ -112,10 +97,8 @@ class Controller
     fun editEstimation(model: Model,
                        @PathVariable taskId: String,
                        @PathVariable performerId: String,
-                       @PathVariable estimationId: String): String
-    {
-        if (estimationId != "none")
-        {
+                       @PathVariable estimationId: String): String {
+        if (estimationId != "none") {
             with(taskStorage.getTask(taskId).getPerformer(performerId).getEstimation(estimationId))
             {
                 model.addAttribute("partName", partName)
@@ -136,12 +119,10 @@ class Controller
                          @RequestParam best: Double,
                          @RequestParam worst: Double,
                          @RequestParam most: Double,
-                         @RequestParam(required = false) champion: Boolean): String
-    {
-        when (estimationId)
-        {
+                         @RequestParam(required = false) champion: Boolean): String {
+        when (estimationId) {
             "none" -> taskStorage.addEstimation(taskId, performerId, partName, best, worst, most, champion)
-            else   -> taskStorage.modifyEstimation(taskId,
+            else -> taskStorage.modifyEstimation(taskId,
                     performerId,
                     estimationId,
                     partName,
@@ -156,8 +137,7 @@ class Controller
     @RequestMapping("/task/{taskId}/performer/{performerId}/estimation/{estimationId}/remove")
     fun removeEstimation(@PathVariable taskId: String,
                          @PathVariable performerId: String,
-                         @PathVariable estimationId: String): String
-    {
+                         @PathVariable estimationId: String): String {
         taskStorage.removeEstimation(taskId, performerId, estimationId)
         return "redirect:/task/$taskId/performer/$performerId"
     }
